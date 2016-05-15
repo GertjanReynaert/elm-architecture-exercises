@@ -64,32 +64,57 @@ var _user$project$CounterPair$Update = F2(
 var _user$project$CounterPair$Remove = function (a) {
 	return {ctor: 'Remove', _0: a};
 };
-var _user$project$CounterPair$Insert = {ctor: 'Insert'};
-var _user$project$CounterPair$view = function (model) {
-	var counters = A2(
-		_elm_lang$html$Html$div,
+var _user$project$CounterPair$deleteButton = function (counterId) {
+	return A2(
+		_elm_lang$html$Html$button,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[
+				_elm_lang$html$Html_Events$onClick(
+				_user$project$CounterPair$Remove(counterId))
+			]),
 		_elm_lang$core$Native_List.fromArray(
-			[]));
+			[
+				_elm_lang$html$Html$text('Remove')
+			]));
+};
+var _user$project$CounterPair$viewCounter = function (_p8) {
+	var _p9 = _p8;
+	var _p10 = _p9._0;
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				counters,
 				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$CounterPair$Insert)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Add new counter')
-					]))
+				_elm_lang$html$Html_App$map,
+				_user$project$CounterPair$Update(_p10),
+				_user$project$Counter$view(_p9._1)),
+				_user$project$CounterPair$deleteButton(_p10)
 			]));
+};
+var _user$project$CounterPair$Insert = {ctor: 'Insert'};
+var _user$project$CounterPair$view = function (model) {
+	var insert = A2(
+		_elm_lang$html$Html$button,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Events$onClick(_user$project$CounterPair$Insert)
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text('Add new counter')
+			]));
+	var counters = A2(_elm_lang$core$List$map, _user$project$CounterPair$viewCounter, model.counters);
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Native_List.fromArray(
+				[insert]),
+			counters));
 };
 var _user$project$CounterPair$main = {
 	main: _elm_lang$html$Html_App$beginnerProgram(

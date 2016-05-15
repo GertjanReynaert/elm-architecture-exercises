@@ -60,27 +60,29 @@ update msg model =
         }
 
 
-
 view : Model -> Html Msg
 view model =
   let
-    -- counters = List.map
-    counters = div [] []
+    counters = List.map viewCounter model.counters
+    insert =
+      button [ onClick Insert ] [ text "Add new counter" ]
   in
     div []
-      [ counters
-      , button [ onClick Insert ] [ text "Add new counter" ]
-      ]
+      ([insert] ++ counters)
 
-    -- [ App.map UpdateA (Counter.view model.counterA)
-    -- , App.map UpdateB (Counter.view model.counterB)
-    -- ]
-viewWithRemoveButton: Counter.Model -> Html Counter.Msg
-viewWithRemoveButton model =
-    div []
-      [ Counter.view model
-      , button [ onClick Remove ] [ text "Add new counter" ]
-      ]
+
+viewCounter : (ID, Counter.Model) -> Html Msg
+viewCounter (counterId, counterModel) =
+  div []
+    [ App.map (Update counterId) (Counter.view counterModel)
+    , deleteButton counterId
+    ]
+
+
+deleteButton: ID -> Html Msg
+deleteButton counterId =
+  button [ onClick (Remove counterId) ] [ text "Remove" ]
+
 
 main =
   App.beginnerProgram { model = init , view = view , update = update }
